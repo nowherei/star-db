@@ -73,6 +73,27 @@ export default class App extends Component {
             left={personDetails}
             right={starshipDetails} />
 
+          <ItemList
+            onItemSelected={this.onPersonSelected}
+            getData={this.swapiService.getAllPlanets}>
+
+            {(i) => (
+              `${i.name} (${i.diameter})`
+            )}
+
+          </ItemList>
+
+          <ItemList
+            onItemSelected={this.onPersonSelected}
+            getData={this.swapiService.getAllStarships}
+            renderItem={({name, model}) => `${name} (${model})`}>
+
+            {(i) => (
+              `${i.name} (${i.model})`
+            )}
+
+          </ItemList>
+
           {/*{planet}
           <div className="button-row">
             <button
