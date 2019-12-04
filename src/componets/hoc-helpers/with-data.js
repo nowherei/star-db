@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 import Spinner from "../spinner";
-import ErrorIndicator from "../error-idicator";
+import ErrorBoundry from "../error-boundry";
 
 const withData = (View, getData) => {
   return class extends Component {
@@ -28,7 +28,11 @@ const withData = (View, getData) => {
         return <Spinner />
       }
 
-      return <View {...this.props} data={data} />;
+      return (
+        <ErrorBoundry>
+          <View {...this.props} data={data} />
+        </ErrorBoundry>
+      );
     }
   };
 };

@@ -4,13 +4,10 @@ import Header from "../header";
 import RandomPlanet from "../random-planet";
 
 import './app.css';
-import ErrorButton from "../error-button";
-import ErrorIndicator from "../error-idicator/error-indicator";
-import PeoplePage from "../people-page";
-import ItemList from "../item-list";
 import ItemDetails, { Record } from "../item-details";
 import SwapiService from "../../services/swapi-service";
 import ErrorBoundry from "../error-boundry";
+import ErrorButton from "../error-button";
 import Row from "../row";
 import {
   PersonDetails,
@@ -46,10 +43,7 @@ export default class App extends Component {
     const { getPerson,
             getStarship,
             getPersonImage,
-            getStarshipImage,
-            getAllPlanets,
-            getAllPeople,
-            getAllStarships } = this.swapiService;
+            getStarshipImage } = this.swapiService;
 
     const personDetails = (
       <ItemDetails
@@ -80,35 +74,7 @@ export default class App extends Component {
         <div className="stardb-app">
           <Header/>
 
-          <Row
-            left={personDetails}
-            right={starshipDetails} />
-
-          <PersonDetails itemId={11} />
-          <PlanetDetails itemId={5} />
-          <StarshipDetails itemId={5} />
-
-          <PersonList>
-            {(i) => (
-              `${i.name} (${i.birthYear})`
-            )}
-          </PersonList>
-
-          <PlanetList>
-            {(i) => (
-              `${i.name} (${i.diameter})`
-            )}
-          </PlanetList>
-
-          <StarshipList>
-            {(i) => (
-              `${i.name} (${i.model})`
-            )}
-          </StarshipList>
-
-
-
-          {/*{planet}
+          {planet}
           <div className="button-row">
             <button
               className="toggle-planet btn btn-warning btn-tg"
@@ -117,6 +83,24 @@ export default class App extends Component {
             </button>
             <ErrorButton />
           </div>
+
+          <Row
+            left={personDetails}
+            right={starshipDetails} />
+
+          <PersonDetails itemId={11} />
+          <PlanetDetails itemId={5} />
+          <StarshipDetails itemId={5} />
+
+          <PersonList />
+
+          <PlanetList />
+
+          <StarshipList />
+
+
+
+          {/*
 
           <PeoplePage />
 
