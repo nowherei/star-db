@@ -12,6 +12,14 @@ import ItemDetails, { Record } from "../item-details";
 import SwapiService from "../../services/swapi-service";
 import ErrorBoundry from "../error-boundry";
 import Row from "../row";
+import {
+  PersonDetails,
+  PlanetDetails,
+  StarshipDetails,
+  PersonList,
+  PlanetList,
+  StarshipList
+} from "../sw-components";
 
 export default class App extends Component {
 
@@ -38,7 +46,10 @@ export default class App extends Component {
     const { getPerson,
             getStarship,
             getPersonImage,
-            getStarshipImage } = this.swapiService;
+            getStarshipImage,
+            getAllPlanets,
+            getAllPeople,
+            getAllStarships } = this.swapiService;
 
     const personDetails = (
       <ItemDetails
@@ -73,26 +84,29 @@ export default class App extends Component {
             left={personDetails}
             right={starshipDetails} />
 
-          <ItemList
-            onItemSelected={this.onPersonSelected}
-            getData={this.swapiService.getAllPlanets}>
+          <PersonDetails itemId={11} />
+          <PlanetDetails itemId={5} />
+          <StarshipDetails itemId={5} />
 
+          <PersonList>
+            {(i) => (
+              `${i.name} (${i.birthYear})`
+            )}
+          </PersonList>
+
+          <PlanetList>
             {(i) => (
               `${i.name} (${i.diameter})`
             )}
+          </PlanetList>
 
-          </ItemList>
-
-          <ItemList
-            onItemSelected={this.onPersonSelected}
-            getData={this.swapiService.getAllStarships}
-            renderItem={({name, model}) => `${name} (${model})`}>
-
+          <StarshipList>
             {(i) => (
               `${i.name} (${i.model})`
             )}
+          </StarshipList>
 
-          </ItemList>
+
 
           {/*{planet}
           <div className="button-row">
