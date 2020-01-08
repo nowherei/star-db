@@ -20,13 +20,25 @@ import {
   PlanetList,
   StarshipList
 } from "../sw-components";
+import DummySwapiService from "../../services/dummy-swapi-service";
 
 export default class App extends Component {
 
-  swapiService = new SwapiService();
+
 
   state = {
     showRandomPlanet: true,
+    swapiService: new SwapiService(),
+  };
+
+  onServiceChange = () => {
+    this.setState(({ swapiService }) => {
+      const Service = swapiService instanceof SwapiService ? DummySwapiService : SwapiService;
+
+      return {
+        swapiService: new Service()
+      };
+    });
   };
 
   toggleRandomPlanet = () => {
@@ -48,7 +60,7 @@ export default class App extends Component {
       getStarship,
       getPersonImage,
       getStarshipImage
-    } = this.swapiService;
+    } = this.state.swapiService;
 
     const personDetails = (
       <ItemDetails
@@ -76,9 +88,9 @@ export default class App extends Component {
 
     return (
       <ErrorBoundry>
-        <SwapiServiceProvider value={this.swapiService}>
+        <SwapiServiceProvider value={this.state.swapiService}>
           <div className="stardb-app">
-            <Header/>
+            <Header onServiceChange={this.onServiceChange} />
 
             {planet}
             <div className="button-row">
@@ -113,7 +125,7 @@ export default class App extends Component {
             <div className="col-md-6">
               <ItemList
                 onItemSelected={this.onPersonSelected}
-                getData={this.swapiService.getAllPlanets}>
+                getData={this.state.swapiService.getAllPlanets}>
 
                 {(i) => (
                   `${i.name} (${i.diameter})`
@@ -130,7 +142,7 @@ export default class App extends Component {
             <div className="col-md-6">
               <ItemList
                 onItemSelected={this.onPersonSelected}
-                getData={this.swapiService.getAllStarships}
+                getData={this.state.swapiService.getAllStarships}
                 renderItem={({name, model}) => `${name} (${model})`}>
 
                 {(i) => (
